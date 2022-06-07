@@ -68,7 +68,6 @@ func (r *requestStorage) GetShowedAndCancelApplications(ctx context.Context) (re
 		"count": bson.M{"$gt": 0},
 	}
 
-	//curA, err := r.activeRequests.Find(context.TODO(), filter, &options.FindOptions{})
 	curA, err := r.db.Collection("activeRequests").Find(context.TODO(), filter, &options.FindOptions{})
 	if err != nil {
 		log.Fatal(err)

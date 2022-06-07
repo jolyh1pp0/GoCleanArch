@@ -4,7 +4,6 @@ go 1.18
 
 require (
 	github.com/sirupsen/logrus v1.8.1
-	github.com/spf13/viper v1.12.0
 	go.mongodb.org/mongo-driver v1.9.1
 )
 

@@ -43,7 +43,7 @@ func (s *service) GetAdminRequests(ctx context.Context) ([]string, error) {
 	}
 
 	for _, app := range Cancel {
-		rez = append(rez, "Cancel("+app.Name+"-"+strconv.Itoa(app.Count)+")")
+		rez = append(rez, "Cancelled("+app.Name+"-"+strconv.Itoa(app.Count)+")")
 	}
 
 	return rez, nil
