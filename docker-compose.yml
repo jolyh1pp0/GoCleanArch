@@ -8,12 +8,12 @@ services:
       - "27017:27017"
     container_name: GoClean
 
-  server:
-    build: ./
-    ports:
-      - '8080:8080'
-    depends_on:
-      - mongo
-    environment:
-      - MONGO_URL=mongodb://127.0.0.1:27017
-    container_name: GoClean
+#  server:
+#    build: ./
+#    ports:
+#      - '8080:8080'
+#    depends_on:
+#      - mongo
+#    environment:
+#      - MONGO_URL=mongodb://127.0.0.1:27017
+#    container_name: GoClean

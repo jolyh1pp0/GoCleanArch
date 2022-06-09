@@ -1,10 +1,12 @@
 package main
 
 import (
+	"GoClearArch/config"
 	"GoClearArch/internal/composites"
 	"GoClearArch/pkg/client/logging"
 	"context"
 	"fmt"
+	"github.com/spf13/viper"
 	"log"
 	"net/http"
 )
@@ -12,9 +14,15 @@ import (
 func main() {
 	logging.Init()
 	logger := logging.GetLogger()
-	logger.Info("create mongodb composite")
 
-	mongoDBComposite, err := composites.NewMongoDBComposite(context.Background(), "localhost", "27017", "", "", "GoClearArch", "test")
+	logger.Info("connecting config")
+	if err := config.Init(); err != nil {
+		log.Fatalf("%s", err.Error())
+	}
+	logger.Info("config connected")
+
+	logger.Info("create mongodb composite")
+	mongoDBComposite, err := composites.NewMongoDBComposite(context.Background(), viper.GetString("mongo.host"), viper.GetString("mongo.port"), viper.GetString("mongo.username"), viper.GetString("mongo.password"), viper.GetString("mongo.database"), viper.GetString("mongo.authsource"))
 	if err != nil {
 		logger.Fatal("mongodb composite failed")
 	}
@@ -30,6 +38,6 @@ func main() {
 	requestComposite.Handler.Register(router)
 
 	logger.Info("server start")
-	fmt.Println("started server at http://localhost:8080/request")
-	log.Fatal(http.ListenAndServe(":8080", router))
+	fmt.Println("started server at http://localhost:" + viper.GetString("server.port") +"/request")
+	log.Fatal(http.ListenAndServe(":" + viper.GetString("server.port"), router))
 }
